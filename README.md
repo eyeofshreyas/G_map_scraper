@@ -11,21 +11,72 @@ A powerful Python-based web scraper for collecting business information from Goo
 - **Anti-Detection**: Randomized request delays and headless browser options to mimic natural browsing
 - **CSV Export**: Organized output with businesses sorted by rating (highest first)
 
-## Installation
+## Setup
 
-### Prerequisites
-- Python 3.8+
-- Google Chrome/Chromium installed at `/usr/bin/google-chrome` (or modify `BROWSER_EXECUTABLE` in the script)
+Follow these steps to create an isolated environment, install dependencies, and run the project.
 
-### Dependencies
+### 1) Python version
+- Recommended: Python 3.10+ (works with 3.8+, but 3.10+ is recommended).
+
+### 2) Create a virtual environment
 ```bash
-pip install "scrapling[fetchers]"
-scrapling install
+python -m venv .venv
+source .venv/bin/activate
 ```
 
-Then verify your setup:
+On Windows (PowerShell):
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+On Windows (Command Prompt):
+```cmd
+.venv\Scripts\activate.bat
+```
+
+### Windows notes
+- Activate the virtual environment using PowerShell or Command Prompt (examples above).
+- Chrome/Chromium path example on Windows: `C:\Program Files\Google\Chrome\Application\chrome.exe`.
+  - Edit the `BROWSER_EXECUTABLE` constant in `gmaps_scraper.py` to match your install path, for example:
+    ```python
+    BROWSER_EXECUTABLE = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+    ```
+- If you prefer Playwright-managed browsers on Windows:
+  ```powershell
+  pip install playwright
+  playwright install
+  ```
+  Run the script after installing browsers:
+  ```powershell
+  python gmaps_scraper.py
+  ```
+
+Note: On some Windows setups PowerShell's execution policy blocks `Activate.ps1`. If you see an error about running scripts, either run PowerShell as Administrator and set `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`, or use the Command Prompt activation shown above.
+
+### 3) Install dependencies
+Install runtime and test dependencies from `requirements.txt`:
+```bash
+pip install -U pip
+pip install -r requirements.txt
+```
+
+Notes:
+- The scraper uses a system Chrome/Chromium binary by default (`BROWSER_EXECUTABLE = /usr/bin/google-chrome`).
+- If you prefer to use Playwright-managed browsers, install Playwright and its browsers:
+  ```bash
+  pip install playwright
+  playwright install
+  ```
+
+### 4) Verify the setup
+Run the script interactively:
 ```bash
 python gmaps_scraper.py
+```
+
+Run the test suite:
+```bash
+pytest tests/ -q
 ```
 
 ## Usage
